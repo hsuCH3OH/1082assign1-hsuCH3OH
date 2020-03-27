@@ -1,13 +1,10 @@
-PImage backgroundImg;
-PImage groundhogImg;
-PImage lifeImg;
-PImage robotImg;
-PImage soilImg;
-PImage soldierImg;
+PImage backgroundImg, groundhogImg, lifeImg, robotImg, soilImg,soldierImg;
 
 int speedX;
 int robotXAxis,robotYAxis;
 int soldierXAxis,soldierYAxis;
+
+int laserStartX, laserStartY, laserEndX, laserRange;
 
 void setup(){
   size(640, 480, P2D);
@@ -27,6 +24,10 @@ void setup(){
   
   soldierXAxis = floor(random(640));
   soldierYAxis = floor(random(2,6))*80;
+  
+  laserStartX = robotXAxis+25;
+  laserStartY = robotYAxis+37;
+  laserEndX = laserStartX-1;
 
 }
 
@@ -56,12 +57,13 @@ void draw(){
     fill(253, 184, 19);
     stroke(255, 255, 0);
     strokeWeight(5);
-    circle(590,50,120);
+    ellipse(590,50,120,120);
     
     //laser
+    laserEndX -=2;
     strokeWeight(10);
     stroke(255,0,0);
-    line(robotXAxis+25, robotYAxis+37, robotXAxis+25, robotYAxis+37);
+    line(laserStartX, laserStartY, laserEndX, laserStartY);
     
     
     //characters
