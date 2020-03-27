@@ -60,6 +60,12 @@ void draw(){
     ellipse(590,50,120,120);
     
     //laser
+    
+    if(laserStartY != robotYAxis+37){
+      robotYAxis = floor(random(2,6))*80;
+      laserStartY = robotYAxis+37;
+    }
+    
     laserEndX -=2;
     strokeWeight(10);
     stroke(255,0,0);
