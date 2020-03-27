@@ -4,7 +4,7 @@ int speedX;
 int robotXAxis,robotYAxis;
 int soldierXAxis,soldierYAxis;
 
-int laserStartX, laserStartY, laserEndX, laserRange;
+int laserStartX, laserStartY, laserEndX, laserRange, laserReStartX;
 
 void setup(){
   size(640, 480, P2D);
@@ -19,21 +19,24 @@ void setup(){
   speedX = floor(random(4,8));
   
   // X,Y random axis for robot and soldier
-  robotXAxis = floor(random(160,561));
+  //robotXAxis = floor(random(160,561));
   robotYAxis = floor(random(2,6))*80;
   
   soldierXAxis = floor(random(640));
   soldierYAxis = floor(random(2,6))*80;
   
-  laserStartX = robotXAxis+25;
+  //laserStartX = robotXAxis+25;
+  laserStartX = floor(random(160,561));
+  robotXAxis = laserStartX-25;
   laserStartY = robotYAxis+37;
   laserEndX = laserStartX-1;
+  laserRange = 35;
 
+  laserReStartX = laserStartX;
 }
 
-
 void draw(){
-  // have to avoid robot and soldier are on the same aisle
+  //avoid robot and soldier are on the same aisle
   if (robotYAxis != soldierYAxis){
     
     //soldier moving
@@ -60,23 +63,33 @@ void draw(){
     ellipse(590,50,120,120);
     
     //laser
-    
     if(laserStartY != robotYAxis+37){
       robotYAxis = floor(random(2,6))*80;
       laserStartY = robotYAxis+37;
-    }
+    } //laser and robot are on the same Y-axis
     
     laserEndX -=2;
     strokeWeight(10);
     stroke(255,0,0);
     line(laserStartX, laserStartY, laserEndX, laserStartY);
     
+    if(laserStartX-laserRange == laserEndX){
+      laserStartX-=2;
+    } //Start moving left after End is go over the Range
+    
+    if (laserEndX <= robotXAxis-125){
+      laserEndX = laserStartX-1;
+      laserStartX = laserReStartX-=2;
+    }
     
     //characters
     image(groundhogImg,width/2-40,80);
     image(robotImg,robotXAxis,robotYAxis);
     image(soldierImg,soldierXAxis,soldierYAxis);
-  }else{ robotYAxis = floor(random(2,6))*80;
-  soldierYAxis = floor(random(2,6))*80;}
+    
+  }else{ 
+    robotYAxis = floor(random(2,6))*80; //avoid robot and soldier are on the same aisle
+    soldierYAxis = floor(random(2,6))*80;
+    }
   
 }
