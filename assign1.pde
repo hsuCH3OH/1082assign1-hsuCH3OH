@@ -33,7 +33,9 @@ void setup(){
   laserRange = 35;
 
   laserReStartX = laserStartX;
+
 }
+
 
 void draw(){
   //avoid robot and soldier are on the same aisle
@@ -73,15 +75,16 @@ void draw(){
     stroke(255,0,0);
     line(laserStartX, laserStartY, laserEndX, laserStartY);
     
-    if(laserStartX-laserRange == laserEndX){
+    if (laserEndX <= robotXAxis-125){
+      laserEndX = laserReStartX-1;
+      laserStartX = laserReStartX;
+    }
+    
+    if(laserStartX-laserEndX == laserRange){
       laserStartX-=2;
     } //Start moving left after End is go over the Range
     
-    if (laserEndX <= robotXAxis-125){
-      laserEndX = laserStartX-1;
-      laserStartX = laserReStartX-=2;
-    }
-    
+  
     //characters
     image(groundhogImg,width/2-40,80);
     image(robotImg,robotXAxis,robotYAxis);
